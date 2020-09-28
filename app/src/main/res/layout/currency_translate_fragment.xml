@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:paddingVertical="10dp"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/rub_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="RUB"
+            android:layout_marginBottom="5dp"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/rub_value"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:minWidth="80dp"
+            android:inputType="numberDecimal"
+            android:text="0"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/equals_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="15dp"
+        android:paddingTop="15dp"
+        android:text="="
+        android:textSize="36sp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/foreign_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="Foreign"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/foreign_value"
+            android:gravity="start|center"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:paddingLeft="5dp"
+            android:paddingBottom="5dp"
+            android:minWidth="80dp"
+            android:text="0"
+            android:textSize="24sp" />
+
+    </LinearLayout>
+</LinearLayout>
