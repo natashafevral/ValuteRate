@@ -15,21 +15,26 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.natasha.valuterate.Currency
 import com.natasha.valuterate.CurrencyAdapter
 import com.natasha.valuterate.R
+import com.natasha.valuterate.databinding.CurrencyListFragmentBinding
 import com.natasha.valuterate.viewmodel.CurrenciesViewModel
 import com.natasha.valuterate.viewmodel.CurrenciesViewModelFactory
 import com.natasha.valuterate.viewmodel.CurrencyViewModel
 import com.natasha.valuterate.viewmodel.CurrencyViewModelFactory
-import kotlinx.android.synthetic.main.currency_list_fragment.*
-import kotlinx.android.synthetic.main.list_item.view.*
+
+
 
 class CurrencyListFragment: Fragment() {
+
+    private var _binding: CurrencyListFragmentBinding? = null
+    private val binding get() = _binding!!
     private lateinit var currencyList: ArrayMap<String, Currency>
     private lateinit var adapter: CurrencyAdapter
     private lateinit var layoutManager: LinearLayoutManager
     private var activitySwipeRefresh: SwipeRefreshLayout? = null
+
     private val currencyViewModel by lazy {
-        var activity = this.activity!!.viewModelStore
-         ViewModelProvider(activity, CurrencyViewModelFactory()).get(CurrencyViewModel::class.java)
+        val activity = this.activity!!.viewModelStore
+         ViewModelProvider(activity, CurrencyViewModelFactory()).get(CurrencyViewModel::class.java) //CurrencyViewModelFactory in CurrenciesViewModelFactory.kt file
     }
 
     private val currenciesViewModel by lazy {
@@ -59,20 +64,20 @@ class CurrencyListFragment: Fragment() {
 
     private fun prepareCurrencyList(currList: ArrayMap<String, Currency>) {
         if (!currList.isNullOrEmpty()) {
-            adapter = CurrencyAdapter(currList)
+            adapter = CurrencyAdapter(currList, this.context!!)
             //Log.d("cur from activity","${adapter.currentCurrency}")
             layoutManager = LinearLayoutManager(this.context)
             layoutManager.orientation = LinearLayoutManager.VERTICAL
-            currency_list.layoutManager = layoutManager
+            binding.currencyList.layoutManager = layoutManager
 
-            currency_list.adapter = adapter
+            binding.currencyList.adapter = adapter
 
             adapter.notifyDataSetChanged()
 
             adapter.currentCurrency.observe(this, Observer<Currency> {
                 currencyViewModel.setSelectedCurrency(it)
                 //Log.d("Click currency fragment", "${it.name}")
-                var x = currencyViewModel.getSelectedCurrency()
+                val x = currencyViewModel.getSelectedCurrency()
                 Log.d("Click currency fragment", "${x.value}")
             })
 
@@ -82,12 +87,16 @@ class CurrencyListFragment: Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         //return super.onCreateView(inflater, container, savedInstanceState)
-        val view = inflater.inflate(R.layout.currency_list_fragment, container, false)
-
+       // val view = inflater.inflate(R.layout.currency_list_fragment, container, false)
+        _binding = CurrencyListFragmentBinding.inflate(inflater, container, false)
         getDailyCurrency()
-        return view
+        return binding.root
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

@@ -1,33 +1,22 @@
 package com.natasha.valuterate
 
-import android.app.Application
-import android.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.ArrayMap
 import android.util.Log
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.natasha.valuterate.fragments.CurrencyListFragment
-import com.natasha.valuterate.viewmodel.CurrenciesViewModel
-import com.natasha.valuterate.viewmodel.CurrenciesViewModelFactory
-
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.currency_list_fragment.*
-import kotlinx.android.synthetic.main.list_item.view.*
 
 class MainActivity : AppCompatActivity()/*, CurrencyListFragment.onSelectedItemListener */{
 
    // private var translateFragment: TranslateFragment = supportFragmentManager.findFragmentById(R.id.translate_fragment) as TranslateFragment
    // private var listFragment = supportFragmentManager.findFragmentById(R.id.list_fragment) as CurrencyListFragment
-    private lateinit var currencyList: ArrayMap<String, Currency>
-    private lateinit var adapter: CurrencyAdapter
-    private lateinit var layoutManager: LinearLayoutManager
+
    /* private val currenciesViewModel by lazy {
         val currencyFactory = CurrenciesViewModelFactory(Application())
         ViewModelProvider(this@MainActivity, currencyFactory).get(CurrenciesViewModel::class.java)}
 */
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
        super.onCreate(savedInstanceState)
        setContentView(R.layout.activity_main)

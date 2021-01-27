@@ -10,16 +10,18 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.natasha.valuterate.Currency
-import com.natasha.valuterate.R
+import com.natasha.valuterate.databinding.CurrencyTranslateFragmentBinding
 import com.natasha.valuterate.viewmodel.CurrencyViewModel
 import com.natasha.valuterate.viewmodel.CurrencyViewModelFactory
-import kotlinx.android.synthetic.main.currency_translate_fragment.*
 
 class TranslateFragment: Fragment() {
 
+    private var _binding: CurrencyTranslateFragmentBinding? = null
+    private val binding get() = _binding!!
+
     private var currentCurrency: Currency = Currency()
     private val currencyViewModel by lazy {
-        var activity = this.activity!!.viewModelStore
+        val activity = this.activity!!.viewModelStore
         ViewModelProvider(activity, CurrencyViewModelFactory()).get(CurrencyViewModel::class.java)
     }
 
@@ -36,19 +38,14 @@ class TranslateFragment: Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        rub_value.addTextChangedListener(object: TextWatcher{
+        binding.rubValue.addTextChangedListener(object: TextWatcher{
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
             }
-
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
             }
-
             override fun afterTextChanged(p0: Editable?) {
                 fillCurrencyData(currentCurrency)
             }
-
         })
     }
 
@@ -56,34 +53,27 @@ class TranslateFragment: Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         //return super.onCreateView(inflater, container, savedInstanceState)
-        val view = inflater.inflate(R.layout.currency_translate_fragment, container, false)
+      //  val view = inflater.inflate(R.layout.currency_translate_fragment, container, false)
         //lifecycle.addObserver(currencyViewModel)
         Log.d("createView Fragment2", "${lifecycle.currentState}")
 
+        _binding = CurrencyTranslateFragmentBinding.inflate(inflater, container, false)
 
-
-       /* <fragment
-        tools:layout="@layout/currency_list_fragment"
-        android:id="@+id/list_fragment"
-        android:name="com.natasha.valuterate.fragments.CurrencyListFragment"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="5"/>*/
-
-
-        return view
+        return binding.root
     }
 
     private fun fillCurrencyData(currency: Currency) {
         // nRub/value = x/nominal
-        foreign_title.text = currency.charCode
-        var rubValue = rub_value.text.toString().toDouble()
-
-        foreign_value.text = "%.2f".format((rubValue * currency.nominal) / currency.value)
+        binding.foreignTitle.text = currency.charCode
+        val rubValue = binding.rubValue.text.toString().toDouble()
+        val foreign = "%.2f".format((rubValue * currency.nominal) / currency.value)
+        binding.foreignValue.text = foreign
     }
 
-
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }
